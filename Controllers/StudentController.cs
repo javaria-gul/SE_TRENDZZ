@@ -6,12 +6,12 @@ using System.Web.Mvc;
 
 namespace SE_TRENDZZ.Controllers
 {
-    public class HomeController : Controller
+    public class StudentController : Controller
     {
-        // GET: Home
-        public ActionResult Index()
+        public ActionResult Dashboard()
         {
             return View();
         }
     }
+
 }
