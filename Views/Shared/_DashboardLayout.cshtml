@@ -1,0 +1,387 @@
+﻿@{
+    ViewBag.Title = "_DashboardLayout";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+
+   
+</head>
+
+<body>
+    <body>
+        <div class="app-container">
+            @Html.Partial("_Sidebar")
+
+            <div class="main-content">
+                @RenderBody()
+
+                <!-- Move these inside main-content so they appear within the page area -->
+                <div id="homeModal" class="modal section-modal" style="display:block;">
+                    <div class="modal-content">
+                        <h2>🏠 Home Modal</h2>
+                        <p>This is the home modal by default.</p>
+                    </div>
+                </div>
+
+                <div id="postsModal" class="modal section-modal">
+                    <div class="modal-content">
+                        <h2>📝 Posts Modal</h2>
+                        <p>Posts content will go here.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- This stays outside so it's fullscreen -->
+        <div id="profileModal" class="modal profile-modal">
+            <div class="modal-content">
+                <span id="closeProfileModal" class="close-btn">&times;</span>
+                <h2>👤 Profile Modal</h2>
+                <p>Profile related content here.</p>
+            </div>
+        </div>
+
+
+
+
+
+        <script>
+        function openProfileModal() {
+            document.getElementById('profileModal').style.display = 'block';
+        }
+
+        function closeProfileModal() {
+            document.getElementById('profileModal').style.display = 'none';
+        }
+
+
+        window.onclick = function (event) {
+            var modal = document.getElementById('profileModal');
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+        function showModal(modalId) {
+            const modals = ['homeModal', 'postsModal', 'profileModal'];
+            modals.forEach(id => {
+                document.getElementById(id).style.display = (id === modalId) ? 'block' : 'none';
+            });
+        }
+
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('click', function (e) {
+                e.preventDefault();
+                const text = this.innerText.trim().toLowerCase();
+
+                if (text.includes("home")) showModal("homeModal");
+                else if (text.includes("posts")) showModal("postsModal");
+                else if (text.includes("profile")) showModal("profileModal");
+            });
+        });
+
+        function openProfileModal() {
+            showModal("profileModal");
+        }
+
+        function closeProfileModal() {
+            document.getElementById('profileModal').style.display = 'none';
+        }
+
+        window.onclick = function (event) {
+            ['homeModal', 'postsModal', 'profileModal'].forEach(modalId => {
+                const modal = document.getElementById(modalId);
+                if (event.target === modal) {
+                    modal.style.display = "none";
+                }
+            });
+        }
+        document.getElementById("profileUpload").addEventListener("change", function () {
+            const file = this.files[0];
+            if (file) {
+                const formData = new FormData();
+                formData.append("profileImage", file);
+
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById("modalProfilePic").src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+
+                // Send to server
+                fetch("/Account/UploadProfilePicture", {
+
+                    method: "POST",
+                    body: formData
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert("Profile picture updated!");
+
+                            document.getElementById("sidebarProfilePic").src = data.imageUrl;
+                        } else {
+                            alert("Upload failed.");
+                        }
+                    })
+                    .catch(err => {
+                        console.error("Upload error:", err);
+                        alert("An error occurred while uploading.");
+                    });
+            }
+        });
+        function toggleSettingsMenu() {
+            const menu = document.getElementById("settingsMenu");
+            menu.style.display = menu.style.display === "block" ? "none" : "block";
+        }
+
+        function openBioEditor() {
+            const bio = document.getElementById("bioText").value;
+
+            fetch("/Account/UpdateBio", {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ bio: bio })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        alert("Bio updated successfully!");
+                    } else {
+                        alert("Failed to update bio.");
+                    }
+                });
+        }
+        //function openPasswordEditor() {
+        //    document.getElementById("passwordChangeCard").style.display = "block";
+        //}
+        document.addEventListener("DOMContentLoaded", () => {
+            function openPasswordEditor() {
+                document.getElementById("passwordChangeCard").style.display = "block";
+            }
+
+            const newPassInput = document.getElementById("newPassword");
+            const rePassInput = document.getElementById("rePassword");
+            const changeBtn = document.getElementById("submitPasswordChange");
+            const msg = document.getElementById("passwordMatchMsg");
+
+            [newPassInput, rePassInput].forEach(input => {
+                input.addEventListener("input", () => {
+                    const pass1 = newPassInput.value;
+                    const pass2 = rePassInput.value;
+
+                    if (pass1 && pass2 && pass1 === pass2) {
+                        msg.style.display = "none";
+                        changeBtn.disabled = false;
+                    } else {
+                        msg.style.display = "block";
+                        changeBtn.disabled = true;
+                    }
+                });
+            });
+
+            changeBtn.addEventListener("click", function () {
+                const currentPass = document.getElementById("currentPassword").value;
+                const newPass = document.getElementById("newPassword").value;
+
+                fetch("/Account/ChangePassword", {
+                    method: "POST",
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        currentPassword: currentPass,
+                        newPassword: newPass
+                    })
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert("Password changed successfully!");
+                            document.getElementById("passwordChangeCard").style.display = "none";
+                        } else {
+                            alert("Incorrect current password. If you forgot it, contact the admin.");
+                        }
+                    })
+                    .catch(err => {
+                        console.error("Error changing password", err);
+                        alert("Something went wrong. Try again.");
+                    });
+            });
+        });
+
+
+        // Modal element
+        const profileModal = document.getElementById('profileModal');
+        const settingsMenu = document.getElementById('settingsMenu');
+        const passwordChangeCard = document.getElementById('passwordChangeCard');
+        const bioTextarea = document.getElementById('bioText');
+        const submitPasswordBtn = document.getElementById('submitPasswordChange');
+        const currentPasswordInput = document.getElementById('currentPassword');
+        const newPasswordInput = document.getElementById('newPassword');
+        const rePasswordInput = document.getElementById('rePassword');
+        const passwordMatchMsg = document.getElementById('passwordMatchMsg');
+
+        // Open Profile Modal
+        function openProfileModal() {
+            openOnlyModal("profileModal");
+            profileModal.style.display = 'block';
+            settingsMenu.style.display = 'none';
+            passwordChangeCard.style.display = 'none';
+        }
+
+        // Close Profile Modal
+        function closeProfileModal() {
+            profileModal.style.display = 'none';
+        }
+
+        // Toggle Settings Menu
+        function toggleSettingsMenu() {
+
+            if (settingsMenu.style.display === 'none' || settingsMenu.style.display === '') {
+                settingsMenu.style.display = 'block';
+            } else {
+                settingsMenu.style.display = 'none';
+            }
+        }
+
+        // Open Bio Editor (for example, enable textarea for editing)
+        function openBioEditor() {
+            bioTextarea.removeAttribute('readonly');
+            bioTextarea.focus();
+            settingsMenu.style.display = 'none';
+        }
+
+        // Open Password Editor
+        function openPasswordEditor() {
+            passwordChangeCard.style.display = 'block';
+            settingsMenu.style.display = 'none';
+        }
+
+        // Password Matching Validation
+        function checkPasswords() {
+            if (newPasswordInput.value !== rePasswordInput.value) {
+                passwordMatchMsg.style.display = 'block';
+                submitPasswordBtn.disabled = true;
+            } else {
+                passwordMatchMsg.style.display = 'none';
+                submitPasswordBtn.disabled = false;
+            }
+        }
+
+        // Event listeners for password fields
+        newPasswordInput.addEventListener('input', checkPasswords);
+        rePasswordInput.addEventListener('input', checkPasswords);
+
+        // Close modal on clicking outside content
+        window.onclick = function (event) {
+            if (event.target === profileModal) {
+                closeProfileModal();
+            }
+        };
+
+        function openPasswordEditor() {
+            const newPassword = prompt("Enter new password:");
+            if (!newPassword) return;
+
+            fetch("/Account/ChangePassword", {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ password: newPassword })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        alert("Password changed successfully!");
+                    } else {
+                        alert("Password change failed.");
+                    }
+                });
+        }
+        function openOnlyModal(modalId) {
+            // Hide all modals
+            document.querySelectorAll(".modal").forEach(modal => {
+                modal.style.display = "none";
+            });
+
+            // Show only the requested modal
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.style.display = "block";
+            }
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.style.display = "none";
+            }
+        }
+        // Apply to all modals
+        document.querySelectorAll(".modal").forEach(modal => {
+            modal.addEventListener("click", function (e) {
+                if (e.target === modal) {
+                    modal.style.display = "none";
+                }
+            });
+        });
+        function toggleProfileDropdown() {
+    const dropdown = document.getElementById('profileDropdown');
+    if(dropdown.style.display === 'none' || dropdown.style.display === '') {
+        dropdown.style.display = 'block';
+    } else {
+        dropdown.style.display = 'none';
+    }
+}
+
+function hideProfileDropdown() {
+    document.getElementById('profileDropdown').style.display = 'none';
+}
+
+function showProfileModal() {
+    document.getElementById('profileModal').style.display = 'flex';  // fullscreen modal show
+}
+
+function logoutUser() {
+    window.location.href = '@Url.Action("Logout", "Account")';
+}
+        function closeProfileModal() {
+            document.getElementById('profileModal').style.display = 'none';
+        }
+        // Profile Dropdown show/hide on hover
+const profileSection = document.getElementById('profileSection');
+const profileDropdown = document.getElementById('profileDropdown');
+profileSection.addEventListener('mouseenter', () => {
+    profileDropdown.style.display = 'block';
+});
+profileSection.addEventListener('mouseleave', () => {
+    profileDropdown.style.display = 'none';
+});
+
+// Dropdown buttons functionality
+document.getElementById('viewProfileBtn').addEventListener('click', () => {
+    document.getElementById('profileModal').style.display = 'flex';
+});
+document.getElementById('logoutBtn').addEventListener('click', () => {
+    window.location.href = '@Url.Action("Logout", "Account")';
+});
+
+// Close profile modal
+const profileModal = document.getElementById('profileModal');
+document.getElementById('closeProfileModal').addEventListener('click', () => {
+    profileModal.style.display = 'none';
+});
+
+// Existing settings & password editors assumed present
+
+
+
+
+
+        </script>
+    </body>
+</html>

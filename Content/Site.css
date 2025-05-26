@@ -1,6 +1,6 @@
 ﻿/* Set padding to keep content from hitting the edges */
 .body-content {
-    margin-top: 15px;
+    margin-top: 12px;
     padding-left: 15px;
     padding-right: 15px;
 }
@@ -18,3 +18,327 @@ select,
 textarea {
     max-width: 280px;
 }
+
+
+
+/* Sidebar Container */
+.sidebar {
+    width: 240px;
+    background-color: #003777;
+    color: white;
+    height: 100vh;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    z-index: 999;
+}
+
+
+/* Sidebar Title */
+.sidebar-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+    padding: 20px 20px 0px 20px; /* Padding all sides, less bottom */
+    margin: 0;
+    border-bottom: 1px solid #ffffff33;
+}
+
+/* Sidebar Menu List */
+.sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    margin: 0;
+}
+
+/* Menu Item Styling */
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 14px 20px;
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    transition: background-color 0.3s;
+    border-left: 4px solid transparent;
+}
+
+    /* First menu item (like Trendzz) – no top gap */
+    .menu-item:first-child {
+        margin-top: 0;
+    }
+
+    /* Icon Styling */
+    .menu-item i {
+        margin-right: 15px;
+        font-size: 20px;
+    }
+
+    /* Hover and Active State */
+    .menu-item:hover,
+    .menu-item.active {
+        background-color: #0055A4;
+        cursor: pointer;
+        border-left: 4px solid white;
+    }
+
+/* Sidebar Profile Section */
+.sidebar-profile {
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    border-top: 1px solid #ffffff33;
+}
+
+/* Profile Picture */
+.profile-pic {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+/* Profile Text Info */
+.profile-info {
+    color: white;
+    font-size: 18px;
+}
+
+/* Main Content Area */
+.main-content {
+    margin-left: 240px;
+    padding: 30px;
+    background-color: #f0f2f5;
+    min-height: 100vh;
+}
+/* Add this in your CSS file or inside a <style> tag */
+.modal {
+    position: fixed;
+    z-index: 9999; /* High value to bring it above everything */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5); /* Optional: for dark overlay */
+}
+
+
+
+/*.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 500px;
+    z-index: 10000;*/ /* Even higher for inner content if needed */
+    /*position: relative;
+}
+
+
+.close-btn {
+    float: right;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.modal-profile-pic {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.modal-profile-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.modal-profile-pic {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #333;
+}*/
+
+.plus-icon {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: #007bff;
+    color: white;
+    border-radius: 50%;
+    padding: 8px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+/*.settings-icon {
+    position: absolute;
+    bottom: 10px;
+    right: 15px;
+    cursor: pointer;
+    font-size: 20px;
+    color: #555;
+}*/
+
+.settings-menu {
+    position: absolute;
+    bottom: 50px;
+    right: 15px;
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    z-index: 100;
+}
+
+    .settings-menu button {
+        display: block;
+        width: 100%;
+        background: none;
+        border: none;
+        text-align: left;
+        padding: 5px 0;
+        cursor: pointer;
+    }
+
+.bio-textarea {
+    width: 100%;
+    min-height: 60px;
+    resize: vertical;
+    margin-top: 10px;
+    padding: 5px;
+    font-size: 14px;
+}
+.card-box {
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    background-color: #fdfdfd;
+    width: 100%;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.form-field {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 8px;
+    font-size: 14px;
+}
+
+.modal {
+    display: none; /* initially hidden */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(6px); /* background blur */
+    background-color: rgba(0,0,0,0.5); /* semi-transparent dark overlay */
+    justify-content: center;
+    align-items: center;
+    z-index: 20000;
+}
+
+.modal-content {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    width: 90%;
+    max-width: 600px;
+    position: relative;
+    box-shadow: 0 0 25px rgba(0,0,0,0.3);
+}
+
+/* Close button top right corner */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Settings icon position at bottom right inside modal */
+.settings-icon {
+    position: absolute;
+    bottom: 15px;
+    right: 20px;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+/* Profile Dropdown button styling */
+.profile-dropdown button.dropdown-btn {
+    width: 100%;
+    padding: 10px 15px;
+    border: none;
+    background: none;
+    text-align: left;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+    .profile-dropdown button.dropdown-btn:hover {
+        background-color: #f0f0f0;
+    }
+
+/* Only for Profile Modal (floats above, centered, with blur) */
+.profile-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(6px);
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 20000;
+}
+
+    .profile-modal .modal-content {
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 20px;
+        width: 90%;
+        max-width: 600px;
+        position: relative;
+        box-shadow: 0 0 25px rgba(0,0,0,0.3);
+    }
+
+
+/* For All Other Modals (inside main content area) */
+.standard-modal {
+    display: none;
+    position: fixed;
+    left: 240px; /* aligns with main content area */
+    width: calc(100% - 240px);
+    height: 100vh;
+    background-color: rgba(255,255,255,0.8);
+    backdrop-filter: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+}
+
+    .standard-modal .modal-content {
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 20px;
+        width: 90%;
+        max-width: 600px;
+        position: relative;
+        box-shadow: 0 0 25px rgba(0,0,0,0.2);
+    }
+
+
+
+

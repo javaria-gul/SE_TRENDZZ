@@ -20,5 +20,8 @@ namespace SE_TRENDZZ.Models
 
         public int RoleID { get; set; }
         public Role Role { get; set; }
+        public string Bio { get; set; }
+        public string ProfilePicture { get; set; }
+
     }
 }

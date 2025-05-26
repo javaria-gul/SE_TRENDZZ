@@ -199,9 +199,12 @@
     <Content Include="Views\Admin\Dashboard.cshtml" />
     <Content Include="Views\Teacher\Dashboard.cshtml" />
     <Content Include="Views\Student\Dashboard.cshtml" />
+    <Content Include="Views\Shared\_Sidebar.cshtml" />
+    <Content Include="Views\Shared\_DashboardLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\UploadedImages\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

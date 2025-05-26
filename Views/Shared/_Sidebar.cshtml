@@ -1,0 +1,112 @@
+﻿@{
+    ViewBag.Title = "_Sidebar";
+
+    int roleId = Session["RoleID"] != null ? (int)Session["RoleID"] : 0; // 0 ya koi default value
+    string roleText = roleId == 1 ? "Teacher" :
+                      roleId == 2 ? "Student" :
+                      roleId == 3 ? "Admin" : "Unknown";
+
+    string profilePicture = Session["ProfilePicture"] != null
+        ? Url.Content(Session["ProfilePicture"].ToString())
+        : Url.Content("~/images/default-pfp.png");
+}
+
+ <div class="sidebar">
+  Top Title 
+<div class="sidebar-title">SE TRENDZZ</div>
+<div class="sidebar-menu">
+    <a href="@Url.Action("Home", "Student")" class="menu-item active">
+        <i class="fa fa-home"></i> <span>Home</span>
+    </a>
+    <a href="@Url.Action("Posts", "Student")" class="menu-item">
+        <i class="fa fa-plus"></i> <span>Posts</span>
+    </a>
+    <a href="@Url.Action("Gallery", "Student")" class="menu-item">
+        <i class="fa fa-image"></i> <span>Gallery</span>
+    </a>
+    <a href="#" class="menu-item">
+        <i class="fa fa-moon"></i> <span>Dark Mode</span>
+    </a>
+<a href="@Url.Action("Logout", "Account")" class="menu-item">
+        <i class="fa fa-sign-out-alt"></i> <span>Logout</span>
+    </a>
+    </div>-->
+
+ Profile Section 
+<div class="sidebar-profile">
+@*<img src="@profilePicture" alt="Profile Picture" class="profile-pic" id="sidebarProfilePic" onclick="openProfileModal()" />*@
+<img src="@profilePicture" alt="Profile Picture" class="profile-pic" id="sidebarProfilePic" onclick="toggleProfileDropdown()" />
+
+
+
+
+        <div class="profile-info">
+            <strong>@Session["FullName"]</strong><br />
+            <small>@roleText</small>
+        </div>
+    </div>
+</div>
+<div id="profileDropdown" class="profile-dropdown" style="display:none; position:absolute; right:20px; top:70px; background:#fff; border-radius:5px; box-shadow:0 2px 8px rgba(0,0,0,0.15); z-index: 1000;">
+    <button onclick="showProfileModal(); hideProfileDropdown();" class="dropdown-btn">View Profile</button>
+    <button onclick="logoutUser();" class="dropdown-btn">Logout</button>
+</div>
+ Profile Modal 
+<div id="profileModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeProfileModal()">&times;</span>
+        <h2>My Profile</h2>
+
+        <div class="modal-profile-wrapper">
+            <img src="@profilePicture" id="modalProfilePic" class="modal-profile-pic" />
+            <label for="profileUpload" class="plus-icon">
+                <i class="fa fa-plus"></i>
+            </label>
+            <input type="file" id="profileUpload" style="display:none;" />
+        </div>
+
+        <p><strong>Full Name:</strong> @Session["FullName"]</p>
+        <p><strong>Email:</strong> @Session["Email"]</p>
+        <p><strong>Bio:</strong> @Session["Bio"]</p>
+        <p><strong>Role:</strong> @roleText</p>
+    </div>
+</div>
+ @*Profile Modal*@ 
+<div id="profileModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeProfileModal()">&times;</span>
+        <h2>My Profile</h2>
+
+        <div class="modal-profile-wrapper">
+            <img src="@profilePicture" id="modalProfilePic" class="modal-profile-pic" />
+            <label for="profileUpload" class="plus-icon">
+                <i class="fa fa-plus"></i>
+            </label>
+            <input type="file" id="profileUpload" style="display:none;" />
+        </div>
+
+        <p style="font-weight:bold; text-align:center;">@Session["FullName"]</p>
+
+        <textarea id="bioText" class="bio-textarea" placeholder="Add a short bio...">@Session["Bio"]</textarea>
+ @*Settings Button (Bottom Right)*@ 
+<div class="settings-icon" onclick="toggleSettingsMenu()">
+    <i class="fa fa-cog"></i>
+</div>
+ @*Settings Menu*@ 
+<div id="settingsMenu" class="settings-menu" style="display:none;">
+        <button onclick="openBioEditor()">Change Bio</button>
+        <button onclick="openPasswordEditor()">Change Password</button>
+    </div>
+</div>
+ @*Password Modal (Initially Hidden)*@ 
+<div id="passwordChangeCard" class="card-box" style="display:none; margin-top: 20px;">
+        <h3>🔐 Change Password</h3>
+        <input type="password" id="currentPassword" placeholder="Enter current password" class="form-field" />
+        <input type="password" id="newPassword" placeholder="Enter new password" class="form-field" />
+        <input type="password" id="rePassword" placeholder="Re-enter new password" class="form-field" />
+        <p id="passwordMatchMsg" style="color: red; display: none;">Passwords do not match.</p>
+        <button id="submitPasswordChange" disabled>Change Password</button>
+    </div>
+
+</div>
+
+
