@@ -1,19 +1,138 @@
-﻿@{
+﻿@model SE_TRENDZZ.Models.TeamMember
+@{
     ViewBag.Title = "Contact";
 }
-<main aria-labelledby="title">
-    <h2 id="title">@ViewBag.Title.</h2>
-    <h3>@ViewBag.Message</h3>
 
-    <address>
-        One Microsoft Way<br />
-        Redmond, WA 98052-6399<br />
-        <abbr title="Phone">P:</abbr>
-        425.555.0100
-    </address>
+<style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background-color: #ffff;
+    }
 
-    <address>
-        <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-        <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-    </address>
-</main>
+    /* Container for form */
+
+
+    .contact-container {
+        width: 500px;
+        margin: 60px auto;
+        background-color: #efefef;
+        padding: 25px 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+        .contact-container h2,
+        .contact-container h4 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+            font-weight: bold;
+        }
+
+    .contact-info {
+        font-size: 14px;
+        margin-bottom: 25px;
+    }
+
+        .contact-info p {
+            margin: 6px 0;
+        }
+
+        .contact-info a {
+            color: #ba0012;
+            text-decoration: none;
+            word-break: break-all;
+        }
+
+            .contact-info a:hover {
+                text-decoration: underline;
+            }
+
+    .form-group {
+        margin-bottom: 15px;
+        text-align: center; /* center the label */
+    }
+
+    label {
+        display: block;
+        font-size: 13px;
+        margin-bottom: 5px;
+        color: #444;
+        text-align: center; /* center align text */
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea {
+        width: 80%; /* keep them slightly narrower so they center nicely */
+        padding: 8px 10px;
+        font-size: 13px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        background-color: #f9f9f9;
+        display: block;
+        margin: 0 auto; /* center the field */
+    }
+
+
+    textarea {
+        resize: none;
+    }
+
+    .alert-success {
+        background-color: #d4edda;
+        color: #155724;
+        padding: 10px;
+        border-radius: 6px;
+        margin-top: 15px;
+        font-size: 13px;
+        text-align: center;
+    }
+</style>
+
+<!-- Only this box is centered — rest of page remains aligned as is -->
+<div class="contact-container">
+    <h2>Contact @Model.Name</h2>
+
+    <div class="contact-info">
+        <p><strong>Email:</strong> @Model.Email</p>
+        <p> <strong>Phone:</strong> @Model.PhoneNumber </p> <!-- Add this line -->
+        <p><strong>GitHub:</strong> <a href="@Model.GitHub" target="_blank">@Model.GitHub</a></p>
+        <p><strong>LinkedIn:</strong> <a href="@Model.LinkedIn" target="_blank">@Model.LinkedIn</a></p>
+        <p><strong>Instagram:</strong> <a href="@Model.Instagram" target="_blank">@Model.Instagram</a></p>
+        <p><strong>Description:</strong> @Model.Description</p>
+    </div>
+
+    <h4>Leave a message</h4>
+
+    @using (Html.BeginForm("SendMessage", "Home", FormMethod.Post))
+    {
+        @Html.Hidden("ToName", Model.Name)
+
+        <div class="form-group">
+            <label for="SenderName">Your Name</label>
+            <input type="text" id="SenderName" name="SenderName" required />
+        </div>
+        <div class="form-group">
+            <label for="SenderEmail">Your Email</label>
+            <input type="email" id="SenderEmail" name="SenderEmail" required />
+        </div>
+        <div class="form-group">
+            <label for="Message">Your Message</label>
+            <textarea id="Message" name="Message" rows="3" required></textarea>
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-red">Send</button>
+        </div>
+
+    }
+
+    @if (TempData["MsgSent"] != null)
+    {
+        <div class="alert-success">
+            @TempData["MsgSent"]
+        </div>
+    }
+</div>

@@ -1,0 +1,170 @@
+﻿/* ===== General Styles ===== */
+
+.about-container {
+    padding: 40px 60px 30px;
+}
+
+.about-card-wrapper {
+    background-color: #efefef;
+    border-radius: 10px;
+    padding: 30px 30px;
+    margin-bottom: 50px;
+}
+
+
+
+.about-top-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+}
+
+.about-top-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+}
+
+/* NEW - add this */
+.about-description {
+    flex: 1;
+}
+
+    .about-description h2 {
+        font-size: 28px; /* slightly smaller */
+        margin-bottom: 15px;
+    }
+
+    .about-description p {
+        font-size: 16px;
+        line-height: 1.5;
+    }
+
+/* Already present, just confirming */
+.about-image {
+    flex: 1;
+    max-width: 320px;
+    border-radius: 10px; /* Round the container */
+    overflow: hidden; /* Clip overflow to match radius */
+    display: flex; /* Center the image */
+    align-items: center;
+    justify-content: center;
+    height: auto;
+}
+
+    .about-image img {
+        width: 100%;
+        height: auto;
+        max-height: 280px;
+        border-radius: 10px; /* Match container radius */
+        object-fit: cover; /* ✅ Fill and respect shape */
+        transition: transform 0.3s ease;
+        display: block;
+    }
+
+    .about-image:hover {
+        transform: scale(1.05);
+        transition: transform 0.3s ease;
+    }
+
+
+
+
+.about-us-section {
+    margin-top: 60px;
+}
+
+    .about-us-section h2 {
+        font-size: 30px;
+        font-weight: bold;
+        color: black;
+        margin-bottom: 30px;
+    }
+
+.cards-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.about-card {
+    flex: 1 1 22%;
+    background: #efefef;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s ease;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    min-width: 200px;
+}
+
+    .about-card:hover {
+        transform: scale(1.05);
+    }
+
+    .about-card img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        margin-bottom: 15px;
+        object-fit: cover;
+    }
+
+    .about-card h4 {
+        font-size: 20px;
+        font-weight: bold;
+        color: black;
+        margin-bottom: 10px;
+    }
+
+    .about-card p {
+        font-size: 14px;
+        color: #333;
+        margin-bottom: 15px;
+    }
+
+/* ===== Mobile Styles ===== */
+
+@media (max-width: 768px) {
+    .about-container {
+        padding: 20px 30px 20px;
+    }
+
+    .about-card-wrapper {
+        padding: 20px;
+    }
+
+    .about-top-section {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+
+    .about-description h2 {
+        font-size: 28px;
+    }
+
+    .about-description p {
+        font-size: 16px;
+    }
+
+    .about-image {
+        max-width: 280px;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .cards-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .about-card {
+        flex: none;
+        width: 100%;
+        min-width: auto;
+    }
+}

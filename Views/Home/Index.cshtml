@@ -1,4 +1,54 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<div class="container mt-3 mb-3 position-relative" style="min-height: 420px; border-radius: 8px; overflow: hidden;">
+    <!-- Blurred Background Image -->
+    <div style="
+        background-image: url('@Url.Content("~/Images/codeinthedark.jpg")');
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        filter: blur(4px) brightness(0.5);
+        z-index: 1;
+        border-radius: 8px;
+    "></div>
+
+    <!-- Content Overlay -->
+    <div class="position-relative text-white p-5" style="z-index: 2;">
+        <!-- Welcome Heading and Subheading Over Image -->
+        <div class="text-center mb-4">
+            <h1 class="glow-heading">
+                Welcome to SE TRENDZZ
+            </h1>
+
+            <p style="font-family: 'Inria Sans', sans-serif; font-size: 20px; color: #ba0012; font-weight: 600;">
+                Explore. Engage. Evolve.
+            </p>
+        </div>
+
+        <!-- Event Section Title -->
+        <div class="text-center mb-4">
+            <h2 style="font-family: 'Inria Sans', sans-serif; font-weight: 700;">
+                Explore SE TRENDZZ Events Gallery — a showcase of creativity, competition, and campus innovation.
+            </h2>
+        </div>
+
+        <!-- Event Content Centered -->
+        <div class="d-flex flex-column align-items-center justify-content-center text-center">
+            <!-- Explore Button -->
+            <a class="btn btn-red text-white px-4 py-2 mt-3" href="@Url.Action("Gallery", "Home")">
+                Explore
+            </a>
+        </div>
+    </div>
+</div>
+
 

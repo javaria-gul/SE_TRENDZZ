@@ -1,7 +1,52 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "About";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>About</h2>
+<link rel="stylesheet" href="~/Content/about.css" />
 
+<div class="about-container">
+    <div class="about-card-wrapper">
+        <div class="about-top-section">
+            <div class="about-description">
+                <h2>About SE TRENDZZ</h2>
+                <p>
+                    SE TRENDZZ was created with the vision of bridging the gap between students and teachers by promoting a more engaging and interactive environment within the department. We noticed that most interactions are limited to academics, leaving little room for casual or fun engagement. This platform aims to encourage open communication, build stronger connections, and bring a sense of community through features that go beyond the classroom.
+                </p>
+            </div>
+            <div class="about-image">
+                <img src="~/Images/departmentabout.jpg" alt="Department" />
+            </div>
+        </div>
+    </div>
+
+    <div class="about-us-section">
+        <h2>About Us</h2>
+        <div class="cards-container">
+            <div class="about-card">
+                <img src="~/Images/MARIA.jpg" alt="Maria" />
+                <h4>Maria Khan</h4>
+                <p>Focused on designing and developing the user interface, ensuring a smooth, responsive, and visually appealing user experience.</p>
+                <a href="@Url.Action("Contact", "Home", new { name = "Maria" })" class="btn btn-red">Contact</a>
+            </div>
+            <div class="about-card">
+                <img src="~/Images/JERRY.jpg" alt="Javaria" />
+                <h4>Javaria Gul</h4>
+                <p>Handled server-side logic, database integration, and overall system functionality to ensure performance and reliability.</p>
+                <a href="@Url.Action("Contact", "Home", new { name = "Javaria" })" class="btn btn-red">Contact</a>
+            </div>
+            <div class="about-card">
+                <img src="~/Images/FATIMA.jpg" alt="Fatima" />
+                <h4>Fatima Ilyas</h4>
+                <p>Responsible for identifying bugs, validating features, and maintaining the overall quality of the application through rigorous testing.</p>
+                <a href="@Url.Action("Contact", "Home", new { name = "Fatima" })" class="btn btn-red">Contact</a>
+            </div>
+            <div class="about-card">
+                <img src="~/Images/AYESHA.jpg" alt="Ayesha" />
+                <h4>Ayesha Ashfaq</h4>
+                <p>Worked on troubleshooting and resolving code issues, improving system stability, and optimizing the application's performance and usability.</p>
+                <a href="@Url.Action("Contact", "Home", new { name = "Ayesha" })" class="btn btn-red">Contact</a>
+            </div>
+        </div>
+    </div>
+</div>
